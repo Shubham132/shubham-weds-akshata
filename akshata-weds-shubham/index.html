@@ -185,17 +185,6 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
 .reseal { background: none; border: 0; padding: 8px; cursor: pointer; font-family: var(--f-sans); font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
 .reseal:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 
-/* Baraat */
-.procession {
-  position: relative; height: clamp(110px, 18vw, 170px); overflow: hidden;
-  width: 100%; justify-self: stretch;
-}
-.walker { position: absolute; bottom: 2px; left: 100%; height: 92%; animation: walk 34s linear infinite; }
-.walker img { height: 100%; width: auto; max-width: none; animation: bob .7s ease-in-out infinite alternate; }
-@keyframes walk { to { transform: translateX(calc(-100vw - 100%)); } }
-.procession:not(.walking) .walker { animation-play-state: paused; }
-@keyframes bob { to { translate: 0 -3px; } }
-
 /* ---------- Reveal on scroll (only for things below the fold at load) ---------- */
 .pre { opacity: 0; transform: translateY(28px); }
 .in { opacity: 1; transform: none; transition: opacity 1s ease, transform 1.1s cubic-bezier(.2,.7,.2,1); }
@@ -206,7 +195,6 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; }
-  .walker { left: 50%; transform: translateX(-50%); }
   #petals { display: none; }
 }
 </style>
@@ -303,10 +291,6 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
     </div>
     <button class="reseal" id="reseal" type="button">Close the card</button>
   </section>
-
-  <div class="procession" aria-hidden="true">
-    <div class="walker"><img src="images/baraat.webp" alt=""></div>
-  </div>
 
   <img class="garden" src="images/card-garden.webp" alt="">
 </main>
@@ -429,11 +413,6 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
 
   const cue = document.getElementById("scroll-cue");
   addEventListener("scroll", () => cue.classList.toggle("gone", scrollY > 60), { passive: true });
-
-  const road = document.querySelector(".procession");
-  new IntersectionObserver((entries) => {
-    for (const e of entries) road.classList.toggle("walking", e.isIntersecting);
-  }).observe(road);
 
   if (location.hash === "#open") {
     env.hidden = true; document.body.classList.add("opened"); startPetals(false);
