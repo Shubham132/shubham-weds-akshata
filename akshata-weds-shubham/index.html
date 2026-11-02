@@ -29,7 +29,7 @@
 }
 * { box-sizing: border-box; }
 [hidden] { display: none !important; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overscroll-behavior-y: none; }
 body {
   margin: 0;
   background: var(--paper);
@@ -182,17 +182,19 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
 .extras-title { font-family: var(--f-swash); font-size: 18px; }
 .scroll-cue {
   position: fixed; z-index: 6; left: 50%; translate: -50% 0;
-  bottom: calc(15svh + env(safe-area-inset-bottom, 0px));
-  margin: 0; padding: 12px 24px; border-radius: 999px; width: max-content; white-space: nowrap;
-  background: var(--ink); color: #FFF3EE;
-  box-shadow: 0 8px 22px rgba(90,10,40,.4);
-  font-family: var(--f-sans); font-weight: 700; font-size: 15px; letter-spacing: .12em; text-transform: uppercase;
-  display: flex; align-items: center; gap: 10px;
+  bottom: calc(9svh + env(safe-area-inset-bottom, 0px));
+  margin: 0; padding: 10px 22px 12px; border-radius: 20px; width: max-content;
+  background: rgba(247,226,220,.92);
+  box-shadow: 0 0 22px 12px rgba(247,226,220,.85);
+  color: var(--ink);
+  font-family: var(--f-sans); font-weight: 700; font-size: 15px; letter-spacing: .04em;
+  display: grid; justify-items: center; gap: 2px;
   opacity: 0; pointer-events: none; transition: opacity .5s ease;
 }
-.opened .scroll-cue:not(.gone) { opacity: 1; transition-delay: 1.6s; animation: nudge 1.5s ease-in-out infinite; }
-.scroll-cue svg { width: 16px; height: 16px; }
-@keyframes nudge { 50% { transform: translateY(9px); } }
+.opened .scroll-cue:not(.gone) { opacity: 1; transition-delay: 2.6s; }
+.swipe-hand { display: block; width: 40px; height: 62px; position: relative; overflow: hidden; }
+.swipe-hand svg { position: absolute; left: 0; bottom: 0; width: 40px; height: 40px; animation: swipe 1.9s ease-in-out infinite; }
+@keyframes swipe { 0% { transform: translateY(6px); opacity: 0; } 18% { transform: translateY(4px); opacity: 1; } 70% { transform: translateY(-20px); opacity: 1; } 100% { transform: translateY(-24px); opacity: 0; } }
 
 .countdown { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(8px, 2vw, 16px); width: min(100%, 460px); }
 .countdown div {
@@ -283,7 +285,7 @@ main { position: relative; z-index: 1; display: grid; justify-items: center; bac
   <button class="hint" id="hint" type="button">Tap the card to open</button>
 </div>
 
-<p class="scroll-cue" id="scroll-cue" aria-hidden="true">Scroll down<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l5 5 5-5"/></svg></p>
+<p class="scroll-cue" id="scroll-cue" aria-hidden="true"><span class="swipe-hand"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 11V4a1.5 1.5 0 0 1 3 0v6l5 1.2a2 2 0 0 1 1.5 2.3l-.7 4a3 3 0 0 1-2.9 2.5H11a3 3 0 0 1-2.4-1.2L5.2 14a1.4 1.4 0 0 1 2.1-1.8z"/></svg></span>Swipe up</p>
 
 <main id="story">
   <!-- First printed card -->
