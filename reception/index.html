@@ -265,9 +265,6 @@ main { position: relative; z-index: 1; }
 .phones a { color: inherit; text-decoration-color: var(--gold); text-underline-offset: 3px; }
 .sign { display: flex; align-items: center; gap: 14px; font-size: clamp(28px, 3vw + 16px, 40px); font-weight: 500; }
 .sign img { width: .9em; }
-.reseal { background: none; border: 0; padding: 8px; cursor: pointer; font-family: var(--f-sans); font-style: normal; font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
-.reseal:hover { color: var(--ink); }
-.reseal:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
 footer { padding-bottom: 24px; }
 .baraat-scene .procession { margin-bottom: max(28px, env(safe-area-inset-bottom, 0px)); }
 
@@ -421,7 +418,6 @@ footer { padding-bottom: 24px; }
       <p class="addr">“Satyadev”, 343/1, Nehru Road, Tilakwadi, Belagavi - 590006</p>
       <p class="phones"><a href="tel:+919880064990">98800 64990</a><a href="tel:+919738353752">97383 53752</a></p>
     </div>
-    <button class="reseal" id="reseal" type="button">Close the card</button>
   </footer>
   <!-- Closing: the procession -->
   <section class="scene baraat-scene" aria-label="Baraat">
@@ -536,19 +532,7 @@ footer { padding-bottom: 24px; }
     startPetals(true);
     setTimeout(() => { env.hidden = true; }, reduced ? 0 : 1900);
   }
-  function close() {
-    env.hidden = false;
-    document.body.classList.remove("opened");
-    document.body.classList.add("sealed");
-    toTop();
-    void env.offsetWidth;
-    env.classList.remove("opening");
-    document.querySelectorAll(".reveal").forEach((el) => el.classList.remove("pre", "in"));
-    armReveals();
-    cover.focus({ preventScroll: true });
-  }
   env.addEventListener("click", open);
-  document.getElementById("reseal").addEventListener("click", close);
 
   const cue = document.getElementById("scroll-cue");
   addEventListener("scroll", () => cue.classList.toggle("gone", scrollY > 60), { passive: true });
